@@ -28,12 +28,13 @@ mongoose
 const app = express();
 
 // CORS MIDDLEWARE SETUP
-app.use(
-  cors({
+app.use(cors({
     credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN],
-  })
-);
+    origin: [
+      'http://localhost:3000', 
+      'http://your-https://sticky-n.herokuapp.com'
+    ],
+  }));
 
 // SESSION MIDDLEWARE
 app.use(
@@ -63,7 +64,11 @@ app.use(express.static(path.join(__dirname, "public")));
 // ROUTER MIDDLEWARE
 app.use("/", notesRouter);
 
-
+// ROUTE FOR SERVING REACT APP (index.html)
+app.use((req, res, next) => {
+    // If no previous routes match the request, send back the React app.
+    res.sendFile(__dirname + "/public/index.html");
+  });
 
 // ERROR HANDLING
 //  Catch 404 and respond with error message
