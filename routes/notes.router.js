@@ -27,7 +27,6 @@ router.post("/add", (req, res) => {
 });
 
 router.put("/edit/:id", (req, res, next) => {
-
   const { id } = req.params;
   const { title, content } = req.body;
 
@@ -82,19 +81,16 @@ router.post("/add/:id/tag", (req, res) => {
 
   const { tags } = req.body;
   console.log(req.body);
-  Note.findByIdAndUpdate( id, { $push: { tag: tags }}, {new:true})
+  Note.findByIdAndUpdate(id, { $push: { tag: tags } }, { new: true })
 
     .then((response) => {
       console.log(response);
-      res.status(201).json(response)
+      res.status(201).json(response);
     })
-   
 
     .catch((err) => {
       res.status(500).json(err);
     });
 });
 
-
 module.exports = router;
-
